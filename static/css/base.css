@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'vazir';
+    src: url('fonts/Vazir.woff') format('woff'),
+    url('fonts/Vazir.woff2') format('woff2');
+    font-weight: normal;
+}
+
+html, body{
+    font-family: 'vazir';
+} 
