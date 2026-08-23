@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
+from .models import Product
 
 
 products = {
@@ -50,8 +51,11 @@ products = {
 
 def index(request):
     cart = request.session.get('cart', [])
+
+    products_from_db = Product.objects.filter(is_available=True)
+
     return render(request, 'shop/index.html', {
-        'products': products.items(),
+        'products': products_from_db,
         'caller_view': 'home',
         'cart': cart
     })
