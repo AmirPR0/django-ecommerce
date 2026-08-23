@@ -17,11 +17,9 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-#برای خواندن و مدیریت متغیرهای محیطی پروژه django-environ ساخت یک شیء از 
+# برای خواندن و مدیریت متغیرهای محیطی پروژه django-environ ساخت یک شیء از
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / '.env')
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -86,8 +84,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
@@ -128,7 +130,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS =[
+STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
