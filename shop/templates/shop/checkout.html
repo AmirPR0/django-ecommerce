@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'shop/css/checkout.css' %}">
+{% endblock css_files %}
+
+{% block page_title %}Checkout{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="checkout-page">
+    <div class="container py-5">
+
+        <div class="row g-4">
+
+            <!-- سفارش -->
+            <div class="col-md-7">
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Your Order</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        {% for item in cart %}
+                            <div class="row align-items-center border-bottom py-3">
+
+                                <!-- تصویر محصول -->
+                                <div class="col-2">
+                                    <img
+                                        src="{{ item.image }}"
+                                        alt="{{ item.name }}"
+                                        class="img-fluid"
+                                    >
+                                </div>
+
+                                <!-- نام محصول -->
+                                <div class="col">
+                                    <strong>{{ item.name }}</strong>
+
+                                    <div class="text-muted">
+                                        Quantity: {{ item.quantity }}
+                                    </div>
+                                </div>
+
+                                <!-- قیمت -->
+                                <div class="col-auto">
+                                    ${{ item.price }}
+                                </div>
+
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- خلاصه سفارش -->
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Order Summary</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- مبلغ محصولات -->
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Products</span>
+                            <span>${{ total }}</span>
+                        </div>
+
+                        <!-- هزینه ارسال -->
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Shipping</span>
+                            <span>${{ delivery_fee }}</span>
+                        </div>
+
+                        <hr>
+
+                        <!-- مبلغ نهایی -->
+                        <div class="d-flex justify-content-between fw-bold fs-5">
+                            <span>Total</span>
+                            <span>${{ total_with_delivery }}</span>
+                        </div>
+
+
+                        <!-- فرم ثبت سفارش -->
+                        <form method="POST">
+                            <!-- محافظت در برابر حملات CSRF -->
+                            {% csrf_token %}
+                            <!-- ثبت سفارش -->
+                            <button type="submit" class="btn btn-primary w-100 mt-4">Place Order</button>
+                        </form>
+                        
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock page_content %}
+
+{% block page_scripts %}
+{% endblock page_scripts %}

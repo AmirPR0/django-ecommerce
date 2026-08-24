@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .models import Product
+from django.db import transaction
 
+from .models import Product, Order, OrderItem
 
 def index(request):
     cart = request.session.get('cart', [])
@@ -161,3 +162,89 @@ def clear_cart(request):
     request.session.flush()
 
     return redirect('home_page')
+
+
+def checkout_view(request):
+    # دریافت سبد خرید از Session
+    cart = request.session.get('cart', [])
+
+    # اگر سبد خرید خالی باشد، کاربر را به صفحه سبد خرید برمی‌گردانیم
+    if not cart:
+        return redirect('cart_view')
+
+    # محاسبه مبلغ کل محصولات
+    total = sum(
+        float(item['price']) * int(item.get('quantity', 1))
+        for item in cart
+    )
+
+    # هزینه ارسال
+    delivery_fee = float(request.GET.get('shipping', 5))
+
+    # مبلغ نهایی سفارش
+    total_with_delivery = total + delivery_fee
+
+    # اگر کاربر روی Place Order کلیک کرده باشد
+    if request.method == 'POST':
+
+        # تمام عملیات ثبت سفارش را به صورت یک تراکنش انجام می‌دهیم
+        with transaction.atomic():
+
+            # بررسی موجودی تمام محصولات قبل از ثبت سفارش
+            for item in cart:
+                product = Product.objects.get(
+                    slug=item['slug']
+                )
+
+                # اگر موجودی کافی نباشد، سفارش ثبت نمی‌شود
+                if product.stock < item['quantity']:
+                    return redirect('cart_view')
+
+            # ساخت سفارش جدید
+            order = Order.objects.create(
+                total_price=total_with_delivery
+            )
+
+            # ساخت آیتم‌های سفارش و کاهش موجودی
+            for item in cart:
+                product = Product.objects.get(
+                    slug=item['slug']
+                )
+
+                # ایجاد OrderItem
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=item['quantity'],
+                    price=item['price']
+                )
+
+                # کاهش موجودی محصول
+                product.stock -= item['quantity']
+                product.save()
+
+            # بعد از ثبت موفق سفارش، سبد خرید خالی می‌شود
+            request.session['cart'] = []
+
+            # بعد از ثبت موفق سفارش، کاربر را به صفحه موفقیت سفارش می‌فرستیم
+            return redirect('order_success', order_id=order.id)
+
+    return render(request, 'shop/checkout.html', {
+        'cart': cart,
+        'total': total,
+        'delivery_fee': delivery_fee,
+        'total_with_delivery': total_with_delivery
+    })
+
+
+def order_success(request, order_id):
+    # پیدا کردن سفارش ثبت شده
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+
+    # نمایش صفحه موفقیت سفارش
+    return render(request, 'shop/order_success.html', {
+        'order': order
+    })

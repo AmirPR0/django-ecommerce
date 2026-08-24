@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'shop/css/order_success.css' %}">
+{% endblock css_files %}
+
+{% block page_title %}Order Successful{% endblock page_title %}
+
+{% block page_content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-sm text-center mx-auto" style="max-width: 600px;">
+
+        <div class="card-body p-5">
+
+            <!-- پیام موفقیت -->
+            <h1 class="text-success mb-3">
+                Order Successful!
+            </h1>
+
+            <p class="text-muted">
+                Your order has been placed successfully.
+            </p>
+
+            <hr>
+
+            <!-- شماره سفارش -->
+            <p>
+                <strong>Order Number:</strong>
+                #{{ order.id }}
+            </p>
+
+            <!-- وضعیت سفارش -->
+            <p>
+                <strong>Status:</strong>
+                {{ order.get_status_display }}
+            </p>
+
+            <!-- مبلغ سفارش -->
+            <p>
+                <strong>Total:</strong>
+                ${{ order.total_price }}
+            </p>
+
+            <!-- بازگشت به فروشگاه -->
+            <a
+                href="{% url 'home_page' %}"
+                class="btn btn-primary mt-3"
+            >
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock page_content %}
+
+{% block page_scripts %}
+{% endblock page_scripts %}
