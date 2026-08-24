@@ -74,9 +74,12 @@ def add_to_cart(request, slug):
 
     for item in cart:
         if item['slug'] == product.slug:
+
             if item['quantity'] < product.stock:
                 item['quantity'] += 1
+
             break
+
     else:
         if product.stock > 0:
             cart.append({
@@ -99,9 +102,12 @@ def cart_view(request):
     for item in cart:
         try:
             product = Product.objects.get(
-                slug=item['slug']
+                slug=item['slug'],
+                is_available=True
             )
+
             item['stock'] = product.stock
+
         except Product.DoesNotExist:
             item['stock'] = 0
 
