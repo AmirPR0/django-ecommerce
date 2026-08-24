@@ -6,10 +6,27 @@ from .models import Product
 def index(request):
     cart = request.session.get('cart', [])
 
-    products_from_db = Product.objects.filter(is_available=True)
+    products = Product.objects.filter(is_available=True)
+
+    for product in products:
+        product_in_cart = next(
+            (item for item in cart if item['slug'] == product.slug),
+            None
+        )
+
+        quantity_in_cart = (
+            product_in_cart.get('quantity', 0)
+            if product_in_cart
+            else 0
+        )
+
+        product.remaining_stock = max(
+            product.stock - quantity_in_cart,
+            0
+        )
 
     return render(request, 'shop/index.html', {
-        'products': products_from_db,
+        'products': products,
         'caller_view': 'home',
         'cart': cart
     })
@@ -57,17 +74,19 @@ def add_to_cart(request, slug):
 
     for item in cart:
         if item['slug'] == product.slug:
-            item['quantity'] += 1
+            if item['quantity'] < product.stock:
+                item['quantity'] += 1
             break
     else:
-        cart.append({
-            'name': product.name,
-            'price': str(product.price),
-            'slug': product.slug,
-            'image': product.image.url,
-            'des': product.short_description,
-            'quantity': 1
-        })
+        if product.stock > 0:
+            cart.append({
+                'name': product.name,
+                'price': str(product.price),
+                'slug': product.slug,
+                'image': product.image.url,
+                'des': product.short_description,
+                'quantity': 1
+            })
 
     request.session['cart'] = cart
 
@@ -76,6 +95,15 @@ def add_to_cart(request, slug):
 
 def cart_view(request):
     cart = request.session.get('cart', [])
+
+    for item in cart:
+        try:
+            product = Product.objects.get(
+                slug=item['slug']
+            )
+            item['stock'] = product.stock
+        except Product.DoesNotExist:
+            item['stock'] = 0
 
     total = sum(
         float(item['price']) * int(item.get('quantity', 1))

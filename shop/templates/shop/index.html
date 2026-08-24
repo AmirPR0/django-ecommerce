@@ -10,11 +10,13 @@
 {% block page_title %}{% endblock page_title %}
 
 {% block page_content %}
+
 <!-- Header-->
 <header class="bg-dark py-1 bg-dark shadow">
     <div class="container px-4 px-lg-5 my-1">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Mobile Phones</h1>
+
             <p class="lead fw-normal text-white-50 mb-0">
                 connected with the newest mobile technology.
             </p>
@@ -25,12 +27,14 @@
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
+
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
             {% for product in products %}
 
                 <div class="col mb-5">
-                    <div class="card h-100">
+
+                    <div class="card h-100 {% if product.remaining_stock == 0 %}opacity-50{% endif %}">
 
                         <!-- Product image-->
                         <img
@@ -41,6 +45,7 @@
 
                         <!-- Product details-->
                         <div class="card-body p-4">
+
                             <div class="text-center">
 
                                 <!-- Product name-->
@@ -53,29 +58,65 @@
                                     ${{ product.price }}
                                 </p>
 
+                                <!-- Stock status-->
+                                {% if product.remaining_stock == 0 %}
+
+                                    <p class="text-danger fw-bold">
+                                        Out of stock
+                                    </p>
+
+                                {% elif product.remaining_stock <= 5 %}
+
+                                    <p class="text-warning fw-bold">
+                                        Only {{ product.remaining_stock }} left
+                                    </p>
+
+                                {% endif %}
+
                             </div>
+
                         </div>
 
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
                             <div class="text-center">
-                                <a
-                                    class="btn btn-primary mt-auto w-100"
-                                    href="{% url "product_details" product.slug %}"
-                                >
-                                    View options
-                                </a>
+
+                                {% if product.remaining_stock > 0 %}
+
+                                    <a
+                                        class="btn btn-primary mt-auto w-100"
+                                        href="{% url "product_details" product.slug %}"
+                                    >
+                                        View options
+                                    </a>
+
+                                {% else %}
+
+                                    <button
+                                        class="btn btn-secondary mt-auto w-100"
+                                        disabled
+                                    >
+                                        Out of stock
+                                    </button>
+
+                                {% endif %}
+
                             </div>
+
                         </div>
 
                     </div>
+
                 </div>
 
             {% endfor %}
 
         </div>
+
     </div>
 </section>
+
 {% endblock page_content %}
 
 {% block page_scripts %}{% endblock page_scripts %}

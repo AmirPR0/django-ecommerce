@@ -14,69 +14,164 @@
 
             <!-- Cart Items -->
             <div class="col-md-8 cart">
+
                 <div class="title">
                     <div class="row">
-                        <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                        <div class="col text-right text-muted align-self-center">{{ cart|length }} items</div>
+                        <div class="col">
+                            <h4><b>Shopping Cart</b></h4>
+                        </div>
+
+                        <div class="col text-right text-muted align-self-center">
+                            {{ cart|length }} items
+                        </div>
                     </div>
                 </div>
 
                 {% for item in cart %}
+
                     <div class="row border-top border-bottom main align-items-center">
+
                         <div class="col-2">
-                            <img class="img-fluid" src="{{ item.image }}" alt="{{ item.name }}">
+                            <img
+                                class="img-fluid"
+                                src="{{ item.image }}"
+                                alt="{{ item.name }}"
+                            >
                         </div>
 
                         <div class="col">
-                            <div class="row">{{ item.name }}</div>
-                            <div class="row text-muted">{{ item.des }}</div>
+                            <div class="row">
+                                {{ item.name }}
+                            </div>
+
+                            <div class="row text-muted">
+                                {{ item.des }}
+                            </div>
+
+                            {% if item.stock == 0 %}
+                                <div class="text-danger small fw-bold">
+                                    Out of stock
+                                </div>
+
+                            {% elif item.stock <= 5 %}
+                                <div class="text-warning small fw-bold">
+                                    Only {{ item.stock }} left
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="col">
-                            <a href="{% url 'decrease_quantity' item.slug %}" class="text-decoration-none">-</a>
-                            <span class="border px-2 mx-1">{{ item.quantity }}</span>
-                            <a href="{% url 'add_quantity' item.slug %}" class="text-decoration-none">+</a>
+
+                            <a
+                                href="{% url 'decrease_quantity' item.slug %}"
+                                class="text-decoration-none"
+                            >
+                                -
+                            </a>
+
+                            <span class="border px-2 mx-1">
+                                {{ item.quantity }}
+                            </span>
+
+                            {% if item.quantity < item.stock %}
+                                <a
+                                    href="{% url 'add_quantity' item.slug %}"
+                                    class="text-decoration-none"
+                                >
+                                    +
+                                </a>
+                            {% endif %}
+
                         </div>
 
                         <div class="col text-right">
+
                             ${{ item.price }}
-                            <a class="remove-item ms-2" href="{% url 'remove_from_cart' item.slug %}">&#10005;</a>
+
+                            <a
+                                class="remove-item ms-2"
+                                href="{% url 'remove_from_cart' item.slug %}"
+                            >
+                                &#10005;
+                            </a>
+
                         </div>
+
                     </div>
+
                 {% endfor %}
             </div>
 
             <!-- Summary -->
             <div class="col-md-4 summary">
-                <div><h5><b>Summary</b></h5></div>
+
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+
                 <hr>
 
                 <div class="row">
-                    <div class="col" style="padding-left:0;">{{ cart|length }} ITEMS</div>
-                    <div class="col text-right">${{ total }}</div>
+                    <div class="col" style="padding-left:0;">
+                        {{ cart|length }} ITEMS
+                    </div>
+
+                    <div class="col text-right">
+                        ${{ total }}
+                    </div>
                 </div>
 
-                <form id="shipping-form" method="GET" action="{% url 'cart_view' %}">
+                <form
+                    id="shipping-form"
+                    method="GET"
+                    action="{% url 'cart_view' %}"
+                >
                     <p>SHIPPING</p>
-                    <select name="shipping" onchange="this.form.submit()">
-                        <option value="5" {% if delivery_fee == 5 %}selected{% endif %}>
+
+                    <select
+                        name="shipping"
+                        onchange="this.form.submit()"
+                    >
+                        <option
+                            value="5"
+                            {% if delivery_fee == 5 %}selected{% endif %}
+                        >
                             Standard Delivery - $5.00
                         </option>
-                        <option value="10" {% if delivery_fee == 10 %}selected{% endif %}>
+
+                        <option
+                            value="10"
+                            {% if delivery_fee == 10 %}selected{% endif %}
+                        >
                             Express Delivery - $10.00
                         </option>
                     </select>
                 </form>
 
                 <p>GIVE CODE</p>
-                <input id="code" placeholder="Enter your code">
 
-                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                    <div class="col">TOTAL PRICE</div>
-                    <div class="col text-right">${{ total_with_delivery }}</div>
+                <input
+                    id="code"
+                    placeholder="Enter your code"
+                >
+
+                <div
+                    class="row"
+                    style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;"
+                >
+                    <div class="col">
+                        TOTAL PRICE
+                    </div>
+
+                    <div class="col text-right">
+                        ${{ total_with_delivery }}
+                    </div>
                 </div>
 
-                <button class="btn mb-4">CHECKOUT</button>
+                <button class="btn mb-4">
+                    CHECKOUT
+                </button>
+
             </div>
 
         </div>
