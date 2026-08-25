@@ -45,10 +45,13 @@
             </p>
 
             <!-- بازگشت به فروشگاه -->
-            <a
-                href="{% url 'home_page' %}"
-                class="btn btn-primary mt-3"
-            >
+            <!-- مشاهده جزئیات سفارش -->
+            <a href="{% url 'order_detail' order.id %}"class="btn btn-primary mt-3">
+                View Order Details
+            </a>
+
+            <!-- بازگشت به فروشگاه -->
+            <a href="{% url 'home_page' %}"class="btn btn-secondary mt-3">
                 Continue Shopping
             </a>
 

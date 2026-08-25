@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.index, name='home_page'),
+    path('', views.index, name='home_page'), 
     path('<slug:slug>', views.product_details_view, name='product_details'),
     path('add-to-cart/<slug:slug>/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_view, name='cart_view'),
@@ -14,6 +14,10 @@ urlpatterns = [
     path('checkout/', views.checkout_view, name='checkout'),
     # صفحه موفقیت ثبت سفارش
     path('order-success/<int:order_id>/', views.order_success, name='order_success'),
-
+    # صفحه جزئیات یک سفارش
+    path('order/<int:order_id>/',views.order_detail,    name='order_detail'),
+    # صفحه تاریخچه سفارش‌ها
+    path('orders/',views.order_list, name='orders'),
+    
     # path('clear-cart/', views.clear_cart),
 ]

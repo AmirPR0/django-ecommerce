@@ -4,6 +4,7 @@ from django.db import transaction
 
 from .models import Product, Order, OrderItem
 
+
 def index(request):
     cart = request.session.get('cart', [])
 
@@ -247,4 +248,31 @@ def order_success(request, order_id):
     # نمایش صفحه موفقیت سفارش
     return render(request, 'shop/order_success.html', {
         'order': order
+    })
+
+
+def order_detail(request, order_id):
+    # پیدا کردن سفارش بر اساس ID
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        raise Http404
+
+    # دریافت آیتم‌های مربوط به این سفارش
+    order_items = order.items.all()
+
+    # نمایش صفحه جزئیات سفارش
+    return render(request, 'shop/order_detail.html', {
+        'order': order,
+        'order_items': order_items,
+    })
+
+
+def order_list(request):
+    # دریافت تمام سفارش‌های ثبت شده
+    orders = Order.objects.all().order_by('-created_at')
+
+    # نمایش صفحه سفارش‌ها
+    return render(request, 'shop/orders.html', {
+        'orders': orders,
     })

@@ -2,23 +2,60 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "bootstrap/bootstrap.min.css" %}">
-    <link rel="stylesheet" href="{% static "css/base.css" %}">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- Bootstrap CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'bootstrap/bootstrap.min.css' %}"
+    >
+
+    <!-- CSS اصلی پروژه -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/base.css' %}"
+    >
+
+    <!-- CSS مخصوص هر صفحه -->
     {% block css_files %}{% endblock css_files %}
-    <title>{% block page_title %}{% endblock page_title %}</title>
+
+    <title>
+        {% block page_title %}{% endblock page_title %}
+    </title>
+
 </head>
+
+
 <body class="bg-body-secondary p-3 rounded">
+
+    <!-- Header سایت -->
     {% include "include/header.html" %}
 
+
+    <!-- محتوای اصلی هر صفحه -->
     {% block page_content %}{% endblock page_content %}
 
+
+    <!-- Footer سایت -->
     {% include "include/footer.html" %}
 
+
+    <!-- JavaScript مخصوص هر صفحه -->
     {% block page_scripts %}
-        <script src="{% static "bootstrap/bootstrap.bundle.min.js" %}"></script>
+
+        <!-- Bootstrap JavaScript -->
+        <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+
     {% endblock page_scripts %}
+
 </body>
+
 </html>

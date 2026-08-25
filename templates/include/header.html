@@ -1,21 +1,139 @@
+{% load static %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light bg-body-secondary">
+
     <div class="container px-4 px-lg-5">
-        <div class="navbar-brand fw-bold text-success" href="#!">DigiLala</div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                {% if caller_view != "home" %}
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url "home_page" %}">Home</a></li>
-                {% endif %}
-                <li class="nav-item"><a class="nav-link fw-semibold" href="#!">About</a></li>
-            </ul>
-            <form class="d-flex" action="{% url 'cart_view' %}" method="get">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart|length }}</span>
-                </button>
-            </form>
+
+        <!-- نام فروشگاه -->
+        <div class="navbar-brand fw-bold text-success">
+            DigiLala
         </div>
+
+
+        <!-- دکمه منوی موبایل -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent"
+        >
+
+            <!-- لینک‌های سمت چپ -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+
+                {% if caller_view != "home" %}
+
+                    <!-- لینک صفحه اصلی -->
+                    <li class="nav-item">
+                        <a
+                            class="nav-link active"
+                            aria-current="page"
+                            href="{% url 'home_page' %}"
+                        >
+                            Home
+                        </a>
+                    </li>
+
+                {% endif %}
+
+
+                <!-- لینک About -->
+                <li class="nav-item">
+                    <a
+                        class="nav-link fw-semibold"
+                        href="#!"
+                    >
+                        About
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <!-- دکمه‌های سمت راست Header -->
+            <div class="d-flex gap-2">
+
+
+                <!-- ========================= -->
+                <!-- My Orders -->
+                <!-- ========================= -->
+
+                <form
+                    class="d-flex"
+                    action="{% url 'orders' %}"
+                    method="get"
+                >
+
+                    <button
+                        class="btn btn-outline-dark"
+                        type="submit"
+                    >
+
+                        <!-- آیکون سفارش‌ها -->
+                        <img
+                            src="{% static 'icons/box-seam.svg' %}"
+                            width="16"
+                            height="16"
+                            alt=""
+                            class="me-1"
+                        >
+
+                        My Orders
+
+                    </button>
+
+                </form>
+
+
+                <!-- ========================= -->
+                <!-- Cart -->
+                <!-- ========================= -->
+
+                <form
+                    class="d-flex"
+                    action="{% url 'cart_view' %}"
+                    method="get"
+                >
+
+                    <button
+                        class="btn btn-outline-dark"
+                        type="submit"
+                    >
+
+                        <!-- آیکون سبد خرید -->
+                        <img
+                            src="{% static 'icons/cart-fill.svg' %}"
+                            width="16"
+                            height="16"
+                            alt=""
+                            class="me-1"
+                        >
+
+                        Cart
+
+                        <!-- تعداد محصولات داخل سبد خرید -->
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">
+                            {{ cart|length }}
+                        </span>
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
     </div>
+
 </nav>
