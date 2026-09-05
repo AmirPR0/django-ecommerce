@@ -4,103 +4,148 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static "shop/css/index.css" %}">
+<link rel="stylesheet" href="{% static "shop/css/index.css" %}">
 {% endblock css_files %}
 
-{% block page_title %}{% endblock page_title %}
+{% block page_title %}
+
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Home
+    {% endif %}
+
+{% endblock page_title %}
 
 {% block page_content %}
 
-<!-- Header-->
-<header class="bg-dark py-1 bg-dark shadow">
-    <div class="container px-4 px-lg-5 my-1">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Mobile Phones</h1>
 
-            <p class="lead fw-normal text-white-50 mb-0">
-                connected with the newest mobile technology.
-            </p>
+{% if category %}
+
+    <!-- Category Header -->
+
+    <header class="bg-dark py-4 shadow">
+
+        <div class="container px-4 px-lg-5">
+
+            <div class="text-center text-white">
+
+                <h1 class="display-4 fw-bolder">
+                    {{ category.name }}
+                </h1>
+
+                <p class="lead fw-normal text-white-50 mb-0">
+                    Explore products in this category.
+                </p>
+
+            </div>
+
         </div>
-    </div>
-</header>
 
-<!-- Section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+    </header>
 
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            {% for product in products %}
+    <!-- Category Products -->
 
-                <div class="col mb-5">
+    <section class="py-5">
 
-                    <div class="card h-100 {% if product.remaining_stock == 0 %}opacity-50{% endif %}">
+        <div class="container px-4 px-lg-5">
 
-                        <!-- Product image-->
-                        <img
-                            class="card-img-top p-3"
-                            src="{{ product.image.url }}"
-                            alt="{{ product.name }}"
-                        />
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
+                {% for product in products %}
 
-                            <div class="text-center">
+                    <div class="col mb-5">
 
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">
-                                    {{ product.name }}
-                                </h5>
+                        <div class="card h-100 shadow-sm
+                            {% if product.remaining_stock == 0 %}
+                                opacity-50
+                            {% endif %}
+                        ">
 
-                                <!-- Product price-->
-                                <p class="text-success fw-bold mt-2">
-                                    ${{ product.price }}
-                                </p>
+                            <!-- Product Image -->
 
-                                <!-- Stock status-->
-                                {% if product.remaining_stock == 0 %}
+                            {% if product.image %}
 
-                                    <p class="text-danger fw-bold">
-                                        Out of stock
+                                <img
+                                    class="card-img-top"
+                                    src="{{ product.image.url }}"
+                                    alt="{{ product.name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                                     style="height: 250px;">
+
+                                    <i class="bi bi-image fs-1"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- Product Details -->
+
+                            <div class="card-body p-4">
+
+                                <div class="text-center">
+
+                                    <h5 class="fw-bolder">
+                                        {{ product.name }}
+                                    </h5>
+
+                                    <p class="mb-2">
+                                        {{ product.price }}
                                     </p>
 
-                                {% elif product.remaining_stock <= 5 %}
 
-                                    <p class="text-warning fw-bold">
-                                        Only {{ product.remaining_stock }} left
-                                    </p>
+                                    {% if product.remaining_stock > 0 and product.remaining_stock <= 5 %}
 
-                                {% endif %}
+                                        <small class="text-warning fw-bold">
+                                            Only {{ product.remaining_stock }} left
+                                        </small>
+
+                                    {% elif product.remaining_stock == 0 %}
+
+                                        <small class="text-danger fw-bold">
+                                            Out of stock
+                                        </small>
+
+                                    {% endif %}
+
+                                </div>
 
                             </div>
 
-                        </div>
 
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <!-- Product Actions -->
 
-                            <div class="text-center">
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 
-                                {% if product.remaining_stock > 0 %}
+                                <div class="text-center">
 
-                                    <a
-                                        class="btn btn-primary mt-auto w-100"
-                                        href="{% url "product_details" product.slug %}"
-                                    >
-                                        View options
-                                    </a>
+                                    {% if product.remaining_stock > 0 %}
 
-                                {% else %}
+                                        <a
+                                            class="btn btn-outline-dark mt-auto"
+                                            href="{% url 'product_details' product.slug %}"
+                                        >
+                                            View Product
+                                        </a>
 
-                                    <button
-                                        class="btn btn-secondary mt-auto w-100"
-                                        disabled
-                                    >
-                                        Out of stock
-                                    </button>
+                                    {% else %}
 
-                                {% endif %}
+                                        <a
+                                            class="btn btn-outline-secondary mt-auto pe-none"
+                                            aria-disabled="true"
+                                        >
+                                            Out of Stock
+                                        </a>
+
+                                    {% endif %}
+
+                                </div>
 
                             </div>
 
@@ -108,14 +153,128 @@
 
                     </div>
 
-                </div>
+                {% empty %}
 
-            {% endfor %}
+                    <div class="text-center py-5">
+
+                        <h4 class="text-muted">
+                            No products available in this category.
+                        </h4>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
 
         </div>
 
-    </div>
-</section>
+    </section>
+
+
+{% else %}
+
+
+    <!-- Home Header -->
+
+    <header class="bg-dark py-4 shadow">
+
+        <div class="container px-4 px-lg-5">
+
+            <div class="text-center text-white">
+
+                <h1 class="display-4 fw-bolder">
+                    Home
+                </h1>
+
+                <p class="lead fw-normal text-white-50 mb-0">
+                    Choose a category to explore our products.
+                </p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Categories -->
+
+    <section class="py-5">
+
+        <div class="container px-4 px-lg-5">
+
+            <div class="row justify-content-center g-4">
+
+                {% for category_item in categories %}
+
+                    <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+
+                        <a
+                            href="{% url 'category_products' category_item.slug %}"
+                            class="text-decoration-none"
+                        >
+
+                            <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
+
+                                {% if category_item.image %}
+
+                                    <div class="ratio ratio-1x1">
+
+                                        <img
+                                            src="{{ category_item.image.url }}"
+                                            class="card-img-top object-fit-cover"
+                                            alt="{{ category_item.name }}"
+                                        >
+
+                                    </div>
+
+                                {% else %}
+
+                                    <div class="ratio ratio-1x1 bg-secondary d-flex align-items-center justify-content-center">
+
+                                        <i class="bi bi-image text-white fs-1"></i>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 text-white text-center py-3">
+
+                                    <h5 class="fw-bold mb-0">
+                                        {{ category_item.name }}
+                                    </h5>
+
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="text-center py-5">
+
+                        <h4 class="text-muted">
+                            No categories available.
+                        </h4>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+{% endif %}
+
 
 {% endblock page_content %}
 

@@ -2,13 +2,38 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.db import transaction
 
-from .models import Product, Order, OrderItem
+from .models import Category, Product, Order, OrderItem
 
 
 def index(request):
+    # دریافت دسته‌بندی‌های فروشگاه
+    categories = Category.objects.all()
+
+    # دریافت سبد خرید از Session
     cart = request.session.get('cart', [])
 
-    products = Product.objects.filter(is_available=True)
+    # نمایش صفحه Home
+    return render(request, 'shop/index.html', {
+        'categories': categories,
+        'caller_view': 'home',
+        'cart': cart
+    })
+
+
+def category_products(request, slug):
+    try:
+        category = Category.objects.get(slug=slug)
+    except Category.DoesNotExist:
+        raise Http404
+
+    cart = request.session.get('cart', [])
+
+    categories = Category.objects.all()
+
+    products = Product.objects.filter(
+        category=category,
+        is_available=True
+    )
 
     for product in products:
         product_in_cart = next(
@@ -29,7 +54,9 @@ def index(request):
 
     return render(request, 'shop/index.html', {
         'products': products,
-        'caller_view': 'home',
+        'category': category,
+        'categories': categories,
+        'caller_view': 'category',
         'cart': cart
     })
 
@@ -46,10 +73,7 @@ def product_details_view(request, slug):
     cart = request.session.get('cart', [])
 
     related_products = Product.objects.filter(
-        is_available=True
-    ).exclude(
-        id=product.id
-    )
+        category=product.category, is_available=True).exclude(id=product.id)
 
     return render(request, 'shop/product_details.html', {
         'product': product,
