@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block css_files %}
+
+    <link
+        rel="stylesheet"
+        href="{% static 'shop/css/index.css' %}"
+    >
+
+{% endblock css_files %}
+
+
+{% block page_title %}
+
+    Search{% if query %} - {{ query }}{% endif %}
+
+{% endblock page_title %}
+
+
+{% block page_content %}
+
+<section class="py-5">
+
+    <div class="container px-4 px-lg-5">
+
+        <!-- ========================= -->
+        <!-- Search Header -->
+        <!-- ========================= -->
+
+        <div class="text-center mb-5">
+
+            {% if query %}
+
+                <h2 class="fw-bold">
+                    Search Results
+                </h2>
+
+                <p class="text-muted">
+                    Results for "{{ query }}"
+                </p>
+
+            {% else %}
+
+                <h2 class="fw-bold">
+                    Search Products
+                </h2>
+
+                <p class="text-muted">
+                    Enter a product name to search.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- Product Results -->
+        <!-- ========================= -->
+
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            {% for product in products %}
+
+                <div class="col mb-5">
+
+                    <div class="card h-100 shadow-sm
+                        {% if product.stock == 0 %}
+                            opacity-50
+                        {% endif %}
+                    ">
+
+                        <!-- ========================= -->
+                        <!-- Product Image -->
+                        <!-- ========================= -->
+
+                        {% if product.image %}
+
+                            <img
+                                class="card-img-top"
+                                src="{{ product.image.url }}"
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                                style="height: 250px;"
+                            >
+
+                                <i class="bi bi-image fs-1"></i>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- ========================= -->
+                        <!-- Product Details -->
+                        <!-- ========================= -->
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center">
+
+                                <h5 class="fw-bolder">
+                                    {{ product.name }}
+                                </h5>
+
+                                <p class="mb-2">
+                                    {{ product.price }}
+                                </p>
+
+
+                                {% if product.stock > 0 and product.stock <= 5 %}
+
+                                    <small class="text-warning fw-bold">
+                                        Only {{ product.stock }} left
+                                    </small>
+
+                                {% elif product.stock == 0 %}
+
+                                    <small class="text-danger fw-bold">
+                                        Out of stock
+                                    </small>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ========================= -->
+                        <!-- Product Actions -->
+                        <!-- ========================= -->
+
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
+                            <div class="text-center">
+
+                                {% if product.stock > 0 %}
+
+                                    <a
+                                        class="btn btn-outline-dark mt-auto"
+                                        href="{% url 'product_details' product.slug %}"
+                                    >
+                                        View Product
+                                    </a>
+
+                                {% else %}
+
+                                    <a
+                                        class="btn btn-outline-secondary mt-auto pe-none"
+                                        aria-disabled="true"
+                                    >
+                                        Out of Stock
+                                    </a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <!-- ========================= -->
+                <!-- No Results -->
+                <!-- ========================= -->
+
+                <div class="text-center py-5">
+
+                    {% if query %}
+
+                        <i class="bi bi-search text-muted fs-1"></i>
+
+                        <h4 class="text-muted mt-3">
+                            No products found for "{{ query }}".
+                        </h4>
+
+                        <p class="text-muted">
+                            Try searching with another product name.
+                        </p>
+
+                    {% else %}
+
+                        <i class="bi bi-search text-muted fs-1"></i>
+
+                        <h4 class="text-muted mt-3">
+                            No search query entered.
+                        </h4>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock page_content %}
+
+
+{% block page_scripts %}
+
+    {{ block.super }}
+
+{% endblock page_scripts %}

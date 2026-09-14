@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static "shop/css/index.css" %}">
 {% endblock css_files %}
 
+
 {% block page_title %}
 
     {% if category %}
@@ -17,32 +18,11 @@
 
 {% endblock page_title %}
 
+
 {% block page_content %}
 
 
 {% if category %}
-
-    <!-- Category Header -->
-
-    <header class="bg-dark py-4 shadow">
-
-        <div class="container px-4 px-lg-5">
-
-            <div class="text-center text-white">
-
-                <h1 class="display-4 fw-bolder">
-                    {{ category.name }}
-                </h1>
-
-                <p class="lead fw-normal text-white-50 mb-0">
-                    Explore products in this category.
-                </p>
-
-            </div>
-
-        </div>
-
-    </header>
 
 
     <!-- Category Products -->
@@ -175,29 +155,6 @@
 {% else %}
 
 
-    <!-- Home Header -->
-
-    <header class="bg-dark py-4 shadow">
-
-        <div class="container px-4 px-lg-5">
-
-            <div class="text-center text-white">
-
-                <h1 class="display-4 fw-bolder">
-                    Home
-                </h1>
-
-                <p class="lead fw-normal text-white-50 mb-0">
-                    Choose a category to explore our products.
-                </p>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
     <!-- Categories -->
 
     <section class="py-5">
@@ -278,4 +235,9 @@
 
 {% endblock page_content %}
 
-{% block page_scripts %}{% endblock page_scripts %}
+
+{% block page_scripts %}
+
+    {{ block.super }}
+
+{% endblock page_scripts %}

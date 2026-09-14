@@ -1,134 +1,265 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light bg-body-secondary">
+<!-- ========================= -->
+<!-- Main Navbar -->
+<!-- ========================= -->
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+
 
     <div class="container px-4 px-lg-5">
 
-        <!-- نام فروشگاه -->
-        <div class="navbar-brand fw-bold text-success">
+
+        <!-- ========================= -->
+        <!-- Brand -->
+        <!-- ========================= -->
+
+        <a
+            class="navbar-brand fw-bold text-primary"
+            href="{% url 'home_page' %}"
+        >
             DigiLala
-        </div>
+        </a>
 
 
-        <!-- دکمه منوی موبایل -->
+        <!-- ========================= -->
+        <!-- Mobile Menu Button -->
+        <!-- ========================= -->
+
         <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-target="#navbarContent"
+            aria-controls="navbarContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
         >
+
+            <span class="navbar-toggler-icon"></span>
+
         </button>
 
 
+        <!-- ========================= -->
+        <!-- Navbar Content -->
+        <!-- ========================= -->
+
         <div
             class="collapse navbar-collapse"
-            id="navbarSupportedContent"
+            id="navbarContent"
         >
 
-            <!-- لینک‌های سمت چپ -->
+
+            <!-- ========================= -->
+            <!-- Main Navigation -->
+            <!-- ========================= -->
+
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 
-                {% if caller_view != "home" %}
 
-                    <!-- لینک صفحه اصلی -->
-                    <li class="nav-item">
+                <!-- ========================= -->
+                <!-- Categories -->
+                <!-- در Home نمایش داده نمی‌شود -->
+                <!-- ========================= -->
+
+                {% if caller_view != 'home' %}
+
+                    <li class="nav-item dropdown">
+
                         <a
-                            class="nav-link active"
-                            aria-current="page"
-                            href="{% url 'home_page' %}"
+                            class="nav-link fw-semibold dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
                         >
-                            Home
+
+                            <i class="bi bi-grid me-1"></i>
+
+                            Categories
+
                         </a>
+
+
+                        <!-- ========================= -->
+                        <!-- Categories Dropdown -->
+                        <!-- ========================= -->
+
+                        <ul class="dropdown-menu shadow-sm border-0">
+
+                            {% for category_item in navbar_categories %}
+
+                                <li>
+
+                                    <a
+                                        class="dropdown-item"
+                                        href="{% url 'category_products' category_item.slug %}"
+                                    >
+
+                                        <i class="bi bi-chevron-right me-2"></i>
+
+                                        {{ category_item.name }}
+
+                                    </a>
+
+                                </li>
+
+                            {% empty %}
+
+                                <li>
+
+                                    <span class="dropdown-item-text text-muted">
+
+                                        No categories available.
+
+                                    </span>
+
+                                </li>
+
+                            {% endfor %}
+
+                        </ul>
+
                     </li>
 
                 {% endif %}
 
 
-                <!-- لینک About -->
+                <!-- ========================= -->
+                <!-- About -->
+                <!-- ========================= -->
+
                 <li class="nav-item">
+
                     <a
                         class="nav-link fw-semibold"
                         href="#!"
                     >
                         About
                     </a>
+
+                </li>
+
+
+                <!-- ========================= -->
+                <!-- Tickets -->
+                <!-- ========================= -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link fw-semibold"
+                        href="#!"
+                    >
+
+                        <i
+                            class="bi bi-ticket-perforated me-1"
+                        ></i>
+
+                        Tickets
+
+                    </a>
+
                 </li>
 
             </ul>
 
 
-            <!-- دکمه‌های سمت راست Header -->
-            <div class="d-flex gap-2">
+            <!-- ========================= -->
+            <!-- Right Side -->
+            <!-- ========================= -->
+
+            <div class="d-flex align-items-center gap-2">
 
 
                 <!-- ========================= -->
-                <!-- My Orders -->
+                <!-- Search -->
                 <!-- ========================= -->
 
                 <form
-                    class="d-flex"
-                    action="{% url 'orders' %}"
+                    action="{% url 'search_products' %}"
                     method="get"
+                    class="d-flex align-items-center gap-1"
+                    id="searchForm"
                 >
 
-                    <button
-                        class="btn btn-outline-dark"
-                        type="submit"
+                    <!-- Search Input -->
+
+                    <input
+                        type="search"
+                        name="q"
+                        value="{{ request.GET.q|default:'' }}"
+                        class="form-control"
+                        placeholder="Search products..."
+                        aria-label="Search products"
+                        id="searchInput"
                     >
 
-                        <!-- آیکون سفارش‌ها -->
-                        <img
-                            src="{% static 'icons/box-seam.svg' %}"
-                            width="16"
-                            height="16"
-                            alt=""
-                            class="me-1"
-                        >
 
-                        My Orders
+                    <!-- Search Button -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-light border rounded-circle"
+                        title="Search"
+                        id="searchButton"
+                        disabled
+                    >
+
+                        <i class="bi bi-search"></i>
 
                     </button>
 
                 </form>
+
+                <!-- ========================= -->
+                <!-- Orders -->
+                <!-- ========================= -->
+
+                <a
+                    href="{% url 'orders' %}"
+                    class="btn btn-outline-primary d-flex align-items-center gap-1"
+                >
+
+                    <i
+                        class="bi bi-box-seam"
+                    ></i>
+
+                    <span class="d-none d-md-inline">
+                        Orders
+                    </span>
+
+                </a>
 
 
                 <!-- ========================= -->
                 <!-- Cart -->
                 <!-- ========================= -->
 
-                <form
-                    class="d-flex"
-                    action="{% url 'cart_view' %}"
-                    method="get"
+                <a
+                    href="{% url 'cart_view' %}"
+                    class="btn btn-primary d-flex align-items-center gap-1"
                 >
 
-                    <button
-                        class="btn btn-outline-dark"
-                        type="submit"
-                    >
+                    <i
+                        class="bi bi-cart-fill"
+                    ></i>
 
-                        <!-- آیکون سبد خرید -->
-                        <img
-                            src="{% static 'icons/cart-fill.svg' %}"
-                            width="16"
-                            height="16"
-                            alt=""
-                            class="me-1"
-                        >
-
+                    <span class="d-none d-md-inline">
                         Cart
+                    </span>
 
-                        <!-- تعداد محصولات داخل سبد خرید -->
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">
-                            {{ cart|length }}
-                        </span>
 
-                    </button>
+                    <!-- Cart Items Count -->
 
-                </form>
+                    <span
+                        class="badge bg-white text-primary rounded-pill"
+                    >
+                        {{ cart|length }}
+                    </span>
+
+                </a>
 
             </div>
 
@@ -137,3 +268,20 @@
     </div>
 
 </nav>
+
+<script>
+
+    // دریافت عناصر مربوط به Search
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+
+    // بررسی مقدار Search هنگام تایپ
+    searchInput.addEventListener('input', function () {
+
+        // اگر بعد از حذف فاصله‌ها چیزی وجود داشته باشد،
+        // دکمه Search فعال می‌شود.
+        searchButton.disabled = searchInput.value.trim() === '';
+
+    });
+
+</script>

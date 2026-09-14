@@ -82,6 +82,32 @@ def product_details_view(request, slug):
         'cart': cart,
     })
 
+def search_products(request):
+    # دریافت عبارت جستجو از Query String
+    # مثال: /search/?q=Samsung
+    query = request.GET.get('q', '').strip()
+
+    # در حالت عادی هیچ محصولی نمایش داده نمی‌شود
+    products = Product.objects.none()
+
+    # اگر کاربر عبارتی وارد کرده باشد، محصولات را جستجو می‌کنیم
+    if query:
+        products = Product.objects.filter(
+            name__icontains=query,
+            is_available=True
+        )
+
+    # دریافت سبد خرید از Session
+    cart = request.session.get('cart', [])
+
+    # نمایش صفحه نتایج جستجو
+    return render(request, 'shop/search_results.html', {
+        'products': products,
+        'query': query,
+        'caller_view': 'search',
+        'cart': cart,
+    })
+
 
 def add_to_cart(request, slug):
     try:

@@ -12,20 +12,57 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+
+    <!-- ========================= -->
     <!-- Bootstrap CSS -->
+    <!-- ========================= -->
+
     <link
         rel="stylesheet"
         href="{% static 'bootstrap/bootstrap.min.css' %}"
     >
 
-    <!-- CSS اصلی پروژه -->
+
+    <!-- ========================= -->
+    <!-- Bootstrap Icons -->
+    <!-- ========================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    >
+
+
+    <!-- ========================= -->
+    <!-- Main CSS -->
+    <!-- ========================= -->
+
     <link
         rel="stylesheet"
         href="{% static 'css/base.css' %}"
     >
 
-    <!-- CSS مخصوص هر صفحه -->
+
+    <!-- ========================= -->
+    <!-- Header CSS -->
+    <!-- ========================= -->
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/header.css' %}"
+    >
+
+
+    <!-- ========================= -->
+    <!-- Page Specific CSS -->
+    <!-- ========================= -->
+
     {% block css_files %}{% endblock css_files %}
+
+
+    <!-- ========================= -->
+    <!-- Page Title -->
+    <!-- ========================= -->
 
     <title>
         {% block page_title %}{% endblock page_title %}
@@ -36,25 +73,40 @@
 
 <body class="bg-body-secondary p-3 rounded">
 
-    <!-- Header سایت -->
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
     {% include "include/header.html" %}
 
 
-    <!-- محتوای اصلی هر صفحه -->
+    <!-- ========================= -->
+    <!-- Main Content -->
+    <!-- ========================= -->
+
     {% block page_content %}{% endblock page_content %}
 
 
-    <!-- Footer سایت -->
+    <!-- ========================= -->
+    <!-- Footer -->
+    <!-- ========================= -->
+
     {% include "include/footer.html" %}
 
 
-    <!-- JavaScript مخصوص هر صفحه -->
+    <!-- ========================= -->
+    <!-- JavaScript -->
+    <!-- ========================= -->
+
     {% block page_scripts %}
 
-        <!-- Bootstrap JavaScript -->
-        <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+        <script
+            src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"
+        ></script>
 
     {% endblock page_scripts %}
+
 
 </body>
 

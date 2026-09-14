@@ -1,0 +1,411 @@
+/* ========================= */
+/* Main Navbar */
+/* ========================= */
+
+.navbar {
+    min-height: 70px;
+
+    /* فاصله Navbar از اطراف صفحه */
+    margin: 12px 20px;
+
+    /* گوشه‌های گرد */
+    border-radius: 25px;
+
+    /* جلوگیری از بیرون‌زدن محتوا از گوشه‌های گرد */
+    overflow: visible;
+
+    box-shadow:
+        0 4px 15px rgba(15, 23, 42, 0.08);
+
+    transition: all 0.3s ease;
+}
+
+
+/* ========================= */
+/* Brand */
+/* ========================= */
+
+.navbar-brand {
+    font-size: 1.45rem;
+
+    letter-spacing: 0.3px;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.navbar-brand:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ========================= */
+/* Navigation Links */
+/* ========================= */
+
+.navbar-nav .nav-link {
+    position: relative;
+
+    margin: 0 4px;
+
+    padding: 10px 12px !important;
+
+    color: #475569;
+
+    border-radius: 12px;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* ========================= */
+/* Navigation Hover */
+/* ========================= */
+
+.navbar-nav .nav-link:hover {
+    color: #2563eb;
+
+    background-color: #f8fafc;
+
+    transform: translateY(-1px);
+}
+
+
+/* ========================= */
+/* Animated Underline */
+/* ========================= */
+/*
+    فقط روی لینک‌های معمولی اعمال می‌شود.
+    روی dropdown-toggle اعمال نمی‌شود
+    تا فلش Bootstrap خراب نشود.
+*/
+
+.navbar-nav .nav-link:not(.dropdown-toggle)::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: 4px;
+
+    width: 0;
+    height: 2px;
+
+    background-color: #2563eb;
+
+    border-radius: 10px;
+
+    transform: translateX(-50%);
+
+    transition: width 0.25s ease;
+}
+
+
+/* ========================= */
+/* Hover Underline */
+/* ========================= */
+
+.navbar-nav .nav-link:not(.dropdown-toggle):hover::after {
+    width: 55%;
+}
+
+
+/* ========================= */
+/* Active Link */
+/* ========================= */
+
+.navbar-nav .nav-link.active {
+    color: #2563eb !important;
+
+    background-color: #eff6ff;
+}
+
+
+/* ========================= */
+/* Active Underline */
+/* ========================= */
+
+.navbar-nav .nav-link.active:not(.dropdown-toggle)::after {
+    width: 55%;
+}
+
+
+/* ========================= */
+/* Categories Dropdown */
+/* ========================= */
+
+.navbar .dropdown-menu {
+    min-width: 220px;
+
+    margin-top: 8px;
+
+    padding: 8px;
+
+    border-radius: 14px;
+
+    background-color: #ffffff;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+
+/* ========================= */
+/* Dropdown Items */
+/* ========================= */
+
+.navbar .dropdown-item {
+    padding: 10px 12px;
+
+    color: #475569;
+
+    border-radius: 10px;
+
+    font-weight: 500;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* ========================= */
+/* Dropdown Item Hover */
+/* ========================= */
+
+.navbar .dropdown-item:hover {
+    color: #2563eb;
+
+    background-color: #eff6ff;
+
+    transform: translateX(3px);
+}
+
+
+/* ========================= */
+/* Dropdown Chevron Icons */
+/* ========================= */
+
+.navbar .dropdown-item i {
+    font-size: 0.75rem;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+.navbar .dropdown-item:hover i {
+    transform: translateX(2px);
+}
+
+
+/* ========================= */
+/* Search Button */
+/* ========================= */
+
+.navbar .btn-light {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50% !important;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.navbar .btn-light:hover {
+    background-color: #eff6ff;
+
+    border-color: #2563eb !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.12);
+}
+
+
+/* ========================= */
+/* Orders Button */
+/* ========================= */
+
+.navbar .btn-outline-primary {
+    border-radius: 14px;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.navbar .btn-outline-primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+
+/* ========================= */
+/* Cart Button */
+/* ========================= */
+
+.navbar .btn-primary {
+    border-radius: 14px;
+
+    transition:
+        background-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.navbar .btn-primary:hover {
+    background-color: #1d4ed8;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 14px rgba(37, 99, 235, 0.25);
+}
+
+
+/* ========================= */
+/* Cart Badge */
+/* ========================= */
+
+.navbar .badge {
+    min-width: 20px;
+    height: 20px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 0.72rem;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.navbar .btn-primary:hover .badge {
+    transform: scale(1.1);
+}
+
+
+/* ========================= */
+/* Ticket Icon */
+/* ========================= */
+
+.navbar-nav .nav-link img {
+    transition:
+        transform 0.25s ease;
+}
+
+
+.navbar-nav .nav-link:hover img {
+    transform: rotate(-5deg) scale(1.08);
+}
+
+
+/* ========================= */
+/* Right Side Buttons */
+/* ========================= */
+
+.navbar .d-flex.align-items-center.gap-2 > * {
+    white-space: nowrap;
+}
+
+
+/* ========================= */
+/* Mobile Menu */
+/* ========================= */
+
+@media (max-width: 991.98px) {
+
+    .navbar {
+        margin: 8px 10px;
+
+        border-radius: 20px;
+    }
+
+
+    .navbar-collapse {
+        margin-top: 12px;
+
+        padding: 12px 0;
+    }
+
+
+    .navbar-nav .nav-link {
+        margin: 2px 0;
+
+        padding: 10px 12px !important;
+    }
+
+
+    /* Underline موبایل غیرفعال */
+
+    .navbar-nav .nav-link:not(.dropdown-toggle)::after {
+        display: none;
+    }
+
+
+    .navbar-nav .nav-link:hover {
+        background-color: #f8fafc;
+
+        border-radius: 10px;
+
+        transform: none;
+    }
+
+
+    /* ========================= */
+    /* Mobile Dropdown */
+    /* ========================= */
+
+    .navbar .dropdown-menu {
+        margin-top: 4px;
+
+        padding: 6px;
+
+        border-radius: 12px;
+
+        box-shadow:
+            0 6px 20px rgba(15, 23, 42, 0.10);
+    }
+
+
+    .navbar .dropdown-item {
+        padding: 10px 12px;
+    }
+
+
+    .navbar .d-flex.align-items-center.gap-2 {
+        margin-top: 12px;
+
+        padding-top: 12px;
+
+        border-top: 1px solid #e2e8f0;
+    }
+
+}
