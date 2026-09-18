@@ -1,3 +1,48 @@
-<footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2025</p></div>
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-main">
+
+        <div class="footer-brand">
+            <h4>DigiLala</h4>
+            <p>
+                Your simple and reliable destination for digital products.
+            </p>
+        </div>
+
+        <div class="footer-column">
+            <h5>Shop</h5>
+            <a href="{% url 'home_page' %}">Home</a>
+            <a href="{% url 'home_page' %}">Categories</a>
+            <a href="{% url 'cart_view' %}">Cart</a>
+            <a href="{% url 'orders' %}">Orders</a>
+        </div>
+
+        <div class="footer-column">
+            <h5>Quick Links</h5>
+            {% for category in navbar_categories %}
+                <a href="{% url 'category_products' category.slug %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="footer-column">
+            <h5>Support</h5>
+            <span>Customer Support</span>
+            <span>Support Tickets</span>
+            <span>Contact Us</span>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© {% now "Y" %} DigiLala. All rights reserved.</p>
+
+        <div class="footer-bottom-links">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+        </div>
+    </div>
+</div>
+
 </footer>
