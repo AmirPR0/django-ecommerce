@@ -1,116 +1,150 @@
 /* wrapper اختصاصی برای صفحه سبد خرید */
 .cart-page {
-    background: #ddd;
-    /* رنگ پس‌زمینه کل صفحه */
-    min-height: 80vh;
-    /* حداقل ارتفاع */
-    font-family: sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 4rem 0 4rem 0;
-    /* فاصله از هدر و فوتر */
+background: #ddd;
+min-height: 80vh;
+font-family: sans-serif;
+font-size: 1rem;
+font-weight: bold;
+padding: 4rem 0;
 }
 
 /* کارت اصلی سبد خرید */
 .cart-page .card {
-    margin: auto;
-    /* وسط چین کردن کارت */
-    max-width: 1050px;
-    width: 100%;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.19);
-    border-radius: 1rem;
-    border: none;
-    overflow: hidden;
-    /* جلوگیری از فضای اضافی از padding داخلی */
+margin: auto;
+max-width: 1050px;
+width: 100%;
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.19);
+border-radius: 1rem;
+border: none;
+overflow: hidden;
 }
 
 /* بخش محتوا و سبد خرید */
 .cart-page .cart {
-    background-color: #fff;
-    padding: 4rem 0 9rem 0;
-    border-bottom-left-radius: 1rem;
-    border-top-left-radius: 1rem;
-    height: 30rem;
-    position: relative;
-    overflow-y: auto;
-    /* اسکرول فقط برای آیتم‌ها */
+background-color: #fff;
+padding: 4rem 0 9rem 0;
+border-bottom-left-radius: 1rem;
+border-top-left-radius: 1rem;
+height: 30rem;
+position: relative;
+overflow-y: auto;
 }
 
 .back-to-shop {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
+position: absolute;
+bottom: 2rem;
+left: 2rem;
 }
 
 /* بخش خلاصه خرید */
 .cart-page .summary {
-    background-color: #f0f0f0;
-    /* کمی روشن‌تر از خاکستری صفحه */
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    padding: 4vh;
-    color: rgb(65, 65, 65);
+background-color: #f0f0f0;
+border-top-right-radius: 1rem;
+border-bottom-right-radius: 1rem;
+padding: 4vh;
+color: rgb(65, 65, 65);
+}
+
+/* Empty State */
+.empty-cart {
+max-width: 650px;
+margin: auto;
+padding: 5rem 2rem;
+text-align: center;
+background: #fff;
+border-radius: 1rem;
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.empty-cart i {
+display: block;
+margin-bottom: 1rem;
+font-size: 4rem;
+color: #6c757d;
+}
+
+.empty-cart h4 {
+margin-bottom: 0.75rem;
+font-weight: 700;
+}
+
+.empty-cart p {
+margin-bottom: 1.5rem;
+color: #6c757d;
+font-weight: normal;
+}
+
+.empty-cart .btn {
+width: auto;
+margin-top: 0;
+padding: 0.7rem 1.5rem;
 }
 
 /* ریسپانسیو موبایل */
 @media(max-width:767px) {
-    .cart-page .card {
-        width: 90%;
-    }
+.cart-page .card {
+width: 90%;
+}
 
-    .cart-page .cart {
-        border-radius: 1rem 1rem 0 0;
-        padding: 3vh 3vh;
-    }
+.cart-page .cart {
+    border-radius: 1rem 1rem 0 0;
+    padding: 3vh 3vh;
+}
 
-    .cart-page .summary {
-        border-radius: 0 0 1rem 1rem;
-        padding: 3vh;
-    }
+.cart-page .summary {
+    border-radius: 0 0 1rem 1rem;
+    padding: 3vh;
+}
+
+.empty-cart {
+    width: 90%;
+    padding: 4rem 1.5rem;
+}
+
 }
 
 /* row فقط داخل کارت */
 .cart-page .row {
-    margin: 0;
+margin: 0;
 }
 
 /* استایل متن و دکمه‌ها */
 .cart-page .title b {
-    font-size: 1.5rem;
+font-size: 1.5rem;
 }
 
 .cart-page .btn {
-    background-color: #000;
-    border-color: #000;
-    color: white;
-    width: 100%;
-    font-size: 0.7rem;
-    margin-top: 4vh;
-    padding: 1vh;
-    border-radius: 0;
+background-color: #000;
+border-color: #000;
+color: white;
+width: 100%;
+font-size: 0.7rem;
+margin-top: 4vh;
+padding: 1vh;
+border-radius: 0;
 }
 
 .remove-item {
-    color: #6c757d;
-    font-weight: bold;
-    text-decoration: none;
+color: #6c757d;
+font-weight: bold;
+text-decoration: none;
 }
 
 .remove-item:hover {
-    color: red;
+color: red;
 }
 
 a.text-decoration-none {
-    font-size: 1.2rem;
-    padding: 0 8px;
+font-size: 1.2rem;
+padding: 0 8px;
 }
 
 .row.main {
-    padding: 15px 0;
+padding: 15px 0;
 }
 
 .row.main:hover {
-    background-color: #f1f1f1;
-    transition: 0.2s;
-    border-radius: 8px;
+background-color: #f1f1f1;
+transition: 0.2s;
+border-radius: 8px;
 }
