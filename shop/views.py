@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.db import transaction
+from django.contrib import messages
 
 from .models import Category, Product, Order, OrderItem
 
@@ -126,9 +127,11 @@ def add_to_cart(request, slug):
 
     for item in cart:
         if item['slug'] == product.slug:
-
             if item['quantity'] < product.stock:
                 item['quantity'] += 1
+                messages.success(request, 'Product added to cart.')
+            else:
+                messages.error(request, 'Not enough stock available.')
 
             break
 
@@ -142,6 +145,10 @@ def add_to_cart(request, slug):
                 'des': product.short_description,
                 'quantity': 1
             })
+
+            messages.success(request, 'Product added to cart.')
+        else:
+            messages.error(request, 'Product is out of stock.')
 
     request.session['cart'] = cart
 
@@ -187,8 +194,11 @@ def decrease_quantity(request, slug):
         if item['slug'] == slug:
             if item['quantity'] > 1:
                 item['quantity'] -= 1
+                messages.error(request, 'Product quantity decreased.')
             else:
                 cart.remove(item)
+                messages.error(request, 'Product removed from cart.')
+
             break
 
     request.session['cart'] = cart
@@ -205,6 +215,8 @@ def remove_from_cart(request, slug):
     ]
 
     request.session['cart'] = cart
+
+    messages.error(request, 'Product removed from cart.')
 
     return redirect('cart_view')
 
@@ -276,6 +288,9 @@ def checkout_view(request):
 
             # بعد از ثبت موفق سفارش، سبد خرید خالی می‌شود
             request.session['cart'] = []
+
+            # نمایش پیام موفقیت ثبت سفارش
+            messages.success(request, 'Order placed successfully.')
 
             # بعد از ثبت موفق سفارش، کاربر را به صفحه موفقیت سفارش می‌فرستیم
             return redirect('order_success', order_id=order.id)

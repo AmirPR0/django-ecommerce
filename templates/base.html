@@ -1,6 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,62 +14,93 @@
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
 
+<!-- ========================= -->
+<!-- Page Specific CSS -->
+<!-- ========================= -->
 
-    <!-- ========================= -->
-    <!-- Page Specific CSS -->
-    <!-- ========================= -->
+{% block css_files %}{% endblock css_files %}
 
-    {% block css_files %}{% endblock css_files %}
+<!-- ========================= -->
+<!-- Page Title -->
+<!-- ========================= -->
 
-
-    <!-- ========================= -->
-    <!-- Page Title -->
-    <!-- ========================= -->
-
-    <title>
-        {% block page_title %}{% endblock page_title %}
-    </title>
+<title>
+    {% block page_title %}{% endblock page_title %}
+</title>
 
 </head>
 
-
 <body class="bg-body-secondary p-3 rounded">
 
+<!-- ========================= -->
+<!-- Header -->
+<!-- ========================= -->
 
-    <!-- ========================= -->
-    <!-- Header -->
-    <!-- ========================= -->
+{% include "include/header.html" %}
 
-    {% include "include/header.html" %}
+<!-- ========================= -->
+<!-- Main Content -->
+<!-- ========================= -->
 
+{% block page_content %}{% endblock page_content %}
 
-    <!-- ========================= -->
-    <!-- Main Content -->
-    <!-- ========================= -->
+<!-- ========================= -->
+<!-- Toast Messages -->
+<!-- ========================= -->
 
-    {% block page_content %}{% endblock page_content %}
+{% if messages %}
+    <div class="toast-container position-fixed top-0 end-0 p-3">
 
+        {% for message in messages %}
+            <div
+                class="toast align-items-center text-bg-{% if message.tags == 'error' %}danger
+                    {% else %}{{ message.tags|default:'secondary' }}{% endif %} border-0"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                data-bs-delay="3000"
+            >
+                <div class="d-flex">
+                    <div class="toast-body">
+                        {{ message }}
+                    </div>
 
-    <!-- ========================= -->
-    <!-- Footer -->
-    <!-- ========================= -->
+                    <button
+                        type="button"
+                        class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                    ></button>
+                </div>
+            </div>
+        {% endfor %}
 
-    {% include "include/footer.html" %}
+    </div>
+{% endif %}
 
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
 
-    <!-- ========================= -->
-    <!-- JavaScript -->
-    <!-- ========================= -->
+{% include "include/footer.html" %}
 
-    {% block page_scripts %}
+<!-- ========================= -->
+<!-- JavaScript -->
+<!-- ========================= -->
 
-        <script
-            src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"
-        ></script>
+{% block page_scripts %}
 
-    {% endblock page_scripts %}
+    <script
+        src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"
+    ></script>
 
+    <script>
+        document.querySelectorAll('.toast').forEach(toast => {
+            new bootstrap.Toast(toast).show();
+        });
+    </script>
+
+{% endblock page_scripts %}
 
 </body>
-
 </html>

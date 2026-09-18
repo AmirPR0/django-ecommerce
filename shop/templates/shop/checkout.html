@@ -58,7 +58,6 @@
                 </div>
             </div>
 
-
             <!-- خلاصه سفارش -->
             <div class="col-md-5">
                 <div class="card shadow-sm">
@@ -89,15 +88,17 @@
                             <span>${{ total_with_delivery }}</span>
                         </div>
 
-
                         <!-- فرم ثبت سفارش -->
                         <form method="POST">
                             <!-- محافظت در برابر حملات CSRF -->
                             {% csrf_token %}
+
                             <!-- ثبت سفارش -->
-                            <button type="submit" class="btn btn-primary w-100 mt-4">Place Order</button>
+                            <button type="submit" class="btn btn-primary w-100 mt-4">
+                                Place Order
+                            </button>
                         </form>
-                        
+
                     </div>
 
                 </div>
@@ -109,6 +110,3 @@
 </div>
 
 {% endblock page_content %}
-
-{% block page_scripts %}
-{% endblock page_scripts %}
