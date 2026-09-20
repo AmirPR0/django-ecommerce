@@ -1,5 +1,6 @@
 asgiref==3.10.0
 Django==5.2.7
+django-allauth==65.19.4
 django-environ==0.14.0
 pillow==12.3.0
 psycopg==3.3.4
