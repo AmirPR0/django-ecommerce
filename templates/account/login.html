@@ -1,0 +1,106 @@
+{% extends "account/auth_base.html" %}
+
+{% block page_title %}Sign In | DigiLala{% endblock page_title %}
+
+{% block auth_content %}
+
+<div class="auth-card">
+
+    <!-- Login Form-->
+
+    <section class="auth-form-section">
+        <div class="auth-form-wrapper">
+
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-subtitle">Sign in to your DigiLala account.</p>
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'account_login' %}">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.login.id_for_label }}" class="form-label">
+                        Email
+                    </label>
+
+                    {{ form.login }}
+
+                    {% for error in form.login.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">
+                        Password
+                    </label>
+
+                    {{ form.password }}
+
+                    {% for error in form.password.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+
+                {% if form.remember %}
+                    <div class="form-check mb-3">
+                        {{ form.remember }}
+                        <label
+                            class="form-check-label"
+                            for="{{ form.remember.id_for_label }}"
+                        >
+                            Remember me
+                        </label>
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary auth-submit-btn">
+                    Sign In
+                </button>
+
+                <div class="text-center mt-3">
+                    <a
+                        href="{% url 'account_reset_password' %}"
+                        class="text-decoration-none"
+                    >
+                        Forgot your password?
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
+    <!-- Welcome Section-->
+
+    <section class="auth-welcome-section">
+        <div class="auth-welcome-content">
+
+            <h2 class="auth-welcome-title">New to DigiLala?</h2>
+
+            <p class="auth-welcome-text">
+                Create your account and enjoy a simple and reliable
+                shopping experience.
+            </p>
+
+            <a
+                href="{% url 'account_signup' %}"
+                class="btn btn-light px-4 py-2 fw-semibold"
+            >
+                Create Account
+            </a>
+
+        </div>
+    </section>
+
+</div>
+
+{% endblock auth_content %}

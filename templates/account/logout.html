@@ -1,0 +1,58 @@
+{% extends "account/auth_base.html" %}
+{% load i18n %}
+
+{% block page_title %}Sign Out | DigiLala{% endblock page_title %}
+
+{% block auth_content %}
+<div class="auth-card">
+
+    <section class="auth-form-section">
+        <div class="auth-form-wrapper text-center">
+
+            <div class="mb-4">
+                <i class="bi bi-box-arrow-right text-primary" style="font-size: 4rem;"></i>
+            </div>
+
+            <h1 class="auth-title">Sign Out</h1>
+
+            <p class="auth-subtitle">
+                Are you sure you want to sign out of your DigiLala account?
+            </p>
+
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-primary auth-submit-btn">
+                    <i class="bi bi-box-arrow-right me-2"></i>
+                    Sign Out
+                </button>
+            </form>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'home_page' %}" class="text-decoration-none">
+                    Back to Home
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="auth-welcome-section">
+        <div class="auth-welcome-content">
+
+            <i class="bi bi-shield-check" style="font-size: 3rem;"></i>
+
+            <h2 class="auth-welcome-title mt-3">
+                See You Soon!
+            </h2>
+
+            <p class="auth-welcome-text">
+                Your account is still safe. You can sign in again
+                whenever you want.
+            </p>
+
+        </div>
+    </section>
+
+</div>
+{% endblock auth_content %}

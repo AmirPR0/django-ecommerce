@@ -1,0 +1,174 @@
+/* =========================
+   Authentication Layout
+   ========================= */
+
+.auth-body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: #f5f7fb;
+}
+
+/* =========================
+   Main Content
+   ========================= */
+
+.auth-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+}
+
+/* =========================
+   Authentication Card
+   ========================= */
+
+.auth-card {
+    width: min(900px, 100%);
+    min-height: 520px;
+    display: flex;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Page Transition
+   ========================= */
+
+.auth-transition .auth-card {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   Form Section
+   ========================= */
+
+.auth-form-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px;
+}
+
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 360px;
+}
+
+.auth-title {
+    margin-bottom: 8px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #212529;
+}
+
+.auth-subtitle {
+    margin-bottom: 30px;
+    color: #6c757d;
+}
+
+/* =========================
+   Welcome Section
+   ========================= */
+
+.auth-welcome-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 45px;
+    color: #fff;
+    text-align: center;
+    background: #0d6efd;
+}
+
+.auth-welcome-content {
+    max-width: 330px;
+}
+
+.auth-welcome-title {
+    margin-bottom: 15px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.auth-welcome-text {
+    margin-bottom: 25px;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* =========================
+   Form Elements
+   ========================= */
+
+.auth-form-section .form-control {
+    min-height: 48px;
+    border-radius: 10px;
+}
+
+.auth-form-section .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+}
+
+.auth-submit-btn {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 768px) {
+    .auth-card {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .auth-form-section,
+    .auth-welcome-section {
+        padding: 40px 25px;
+    }
+
+    .auth-welcome-section {
+        order: -1;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-main {
+        padding: 30px 15px;
+    }
+
+    .auth-form-section,
+    .auth-welcome-section {
+        padding: 30px 20px;
+    }
+
+    .auth-title,
+    .auth-welcome-title {
+        font-size: 1.6rem;
+    }
+}
